@@ -1,0 +1,19 @@
+name = "gitpan"
+main = "worker/index.js"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Serves the built frontend (dist/) as static assets, with worker/index.js
+# handling every request first (so /api/* is routed to code, everything
+# else falls back to the static SPA build).
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Non-secret variables can stay here, but for a real deployment prefer
+# `wrangler secret put <NAME>` for GITHUB_TOKEN / ACCESS_PASSWORD / SESSION_SECRET
+# so they never end up committed to your repository.
+[vars]
+GITHUB_REPO = "dazzlingcomputer/gitpan-storage"
+GITHUB_BRANCH = "main"
